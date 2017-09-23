@@ -11,10 +11,10 @@ let friends = require("../data/friends.json");
 
 module.exports = function(app) {
 
-    // return json of all friends
-    app.get("/api/friends", function(req, res) {
-        res.json(friends);
-    });
+	// return json of all friends
+	app.get("/api/friends", function(req, res) {
+		res.json(friends);
+	});
 
 	// Return a json of match from friends and add user to friends
 	app.post("/api/friends", function(req, res) {
