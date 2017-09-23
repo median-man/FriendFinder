@@ -1,4 +1,5 @@
 {
+	"extends": "eslint:recommended",
     "env": {
         "browser": true,
         "commonjs": true,
@@ -19,6 +20,7 @@
         "no-unused-vars": "warn",
         "constructor-super": "warn",
 		"valid-typeof": "warn",
-		"no-console": "off"
+		"no-console": "off",
+		"linebreak-style": ["error", "unix"]
     }
 }
