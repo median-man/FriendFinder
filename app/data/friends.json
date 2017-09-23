@@ -1,1 +1,7 @@
-[]
+[
+	{
+		"name": "Trogdor",
+		"photo": "https://media.giphy.com/media/aLXk8RfbAjAkg/giphy.gif",
+		"scores": [ 5, 5, 1, 1, 1, 5, 5, 1, 1, 5 ]
+	}
+]
