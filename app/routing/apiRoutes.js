@@ -21,7 +21,8 @@ module.exports = function(app) {
 		// get the friend object returned by the user
 		let user = req.body;
 
-        friends.push(req.body);
+		// TODO learn about express-validator and implement the module to replace the following
+		// validation code
 
 		// validate the user data
 		try {
@@ -45,4 +46,30 @@ module.exports = function(app) {
 		// TODO: handle user input error
 			return res.send(err.toString());
 		}
+
+		// find the closest match to the user
+		let matchScore; // comparison score for match
+		let match; // friend object
+
+		friends.forEach(function(friend) {
+
+			// calculate a net score as the sum of the differences between each score. |user - friend|
+			let compScore = friend.scores.reduce(function(accumulator, value, currentIndex) {
+				return Math.abs(user.scores[currentIndex] - value) + accumulator;
+			}, 0);
+
+			// update match if compScore is less than the score for the current match or if
+			// match not yet set (first friend in friends array)
+			if ( !match || compScore < matchScore ) {
+				match = friend;
+				matchScore = compScore;
+			}
+		});
+
+		// add the user to friends data
+		friends.push(req.body);
+
+		// return the match
+		res.json(match);
+	});
 };
