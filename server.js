@@ -13,7 +13,7 @@ let PORT = process.env.PORT || 8080;
 
 // static assets
 app.use(Express.static(Path.join(__dirname, "app/public")));
-
+	
 // implement BodyParser
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
