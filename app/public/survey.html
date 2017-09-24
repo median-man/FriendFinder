@@ -77,7 +77,6 @@
 		</div>
 	</div>
 
-
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
@@ -122,9 +121,11 @@
 					.append(getRadioHtml("3", groupName, "3"))
 					.append(getRadioHtml("4", groupName, "4"))
 					.append(getRadioHtml("5", groupName, "5 (Strongly Agree)"));
-				$questionsDiv.append($formGroup)
-					// add required attribute to first radio control in group
-					.find("input").first().prop("required", true);
+
+				// add required attribute to first radio control in group
+				$formGroup.find("input").first().prop("required", true);
+				$questionsDiv.append($formGroup);
+					
 			});
 		}
 
