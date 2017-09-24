@@ -104,7 +104,7 @@
 
 		// returns html string with a new bootstrap radio form control
 		function getRadioHtml(value, name, label) {
-			return "<div class='radio small'><label><input type='radio' name='" 
+			return "<div class='radio small'><label><input type='radio' name='"
 				+ name + "' value='" + value + "'>" + label + "</label></div>";
 		}
 
@@ -113,7 +113,7 @@
 			$questionsDiv = $("#questions");
 
 			// append each question to form
-			questions.forEach(function  (question, index) {
+			questions.forEach(function (question, index) {
 				let groupName = "q" + index;
 				let $formGroup = $("<div class='form-group radio-group'>")
 					.append("<h4>" + question + "</h4>")
@@ -122,45 +122,48 @@
 					.append(getRadioHtml("3", groupName, "3"))
 					.append(getRadioHtml("4", groupName, "4"))
 					.append(getRadioHtml("5", groupName, "5 (Strongly Agree)"));
-					$questionsDiv.append($formGroup)
-						// add required attribute to first radio control in group
-						.find("input").first().prop("required", true);
+				$questionsDiv.append($formGroup)
+					// add required attribute to first radio control in group
+					.find("input").first().prop("required", true);
 			});
 		}
 
 		// submit the form
 		function handleFormSubmit() {
 			// get array of answers
-			let scores = $("form").serializeArray().map( (el) => {
+			let scores = $("form").serializeArray().map((el) => {
 				return el.value;
 			});
-			
+
 			// get userData from form input (use pattern property of elements for validation)
 			// additional validation occurrs server side
 			let userData = {
-				name	: $("#name").val(),
-				photo	: $("#image").val(),
-				scores	: scores
+				name: $("#name").val(),
+				photo: $("#image").val(),
+				scores: scores
 			};
-
-			console.log(userData);
 
 			// Grab the URL of the website
 			var currentURL = window.location.origin;
 
 			// AJAX post the data to the friends API. 
-			$.post(currentURL + "/api/friends", userData, function(data){
-		
-		
-			});
-
-			
+			$.post(currentURL + "/api/friends", userData, handleMatchReturned);
 		}
 
-		$(document).ready(function() {
+		// Displays match data in a modal
+		function handleMatchReturned(matchData) {
+			// add data to the modal
+			$("#matchName").text(matchData.name);
+			$("#matchImg").attr("src", matchData.photo);
+
+			// show the modal
+			$("#resultsModal").modal('toggle');
+		}
+
+		$(document).ready(function () {
 			renderQuestions();
 
-			$("form").on( "submit", (event) => {
+			$("form").on("submit", (event) => {
 				event.preventDefault();
 				handleFormSubmit(event);
 			});
