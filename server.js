@@ -3,12 +3,16 @@
 // ===========================================================================
 const Express = require("express");
 const BodyParser = require("body-parser");
+const Path = require("path");
 
 // ===========================================================================
 // EXPRESS SERVER CONFIGURATION
 // ===========================================================================
 let app = Express();
 let PORT = process.env.PORT || 8080;
+
+// static assets
+app.use(Express.static(Path.join(__dirname, "app/public")));
 
 // implement BodyParser
 app.use(BodyParser.json());
