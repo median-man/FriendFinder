@@ -136,8 +136,8 @@
 				return el.value;
 			});
 
-			// get userData from form input (use pattern property of elements for validation)
-			// additional validation occurrs server side
+			// get userData from form input additional validation occurrs server side
+			// required property on form controls prevents any null values
 			let userData = {
 				name: $("#name").val(),
 				photo: $("#image").val(),

@@ -21,19 +21,19 @@ module.exports = function(app) {
 		// get the friend object returned by the user
 		let user = req.body;
 
-		// TODO learn about express-validator and implement the module to replace the following
-		// validation code
-
 		// validate the user data
 		try {
 	
-			// TODO test if script tags can be given as imput and subsequently executed when
-			// displayed in the browser
+			// Apply basic validation in case input is submitted by means other than
+			// the form on survey.html. There is no need to escape any script or 
+			// mysql tokens. Friend Finder uses memory for storing user input. 
+			// The methods which render data from user input do not allow execution
+			// of scripts entered as input.
 			user.name = user.name.toString();
 			user.photo = user.photo.toString();
 			if ( user.name.length < 1 ) throw "Invalid user name. User name must have at least one character.";
 	
-			// validate and format the scores array
+			// validate and parse the scores array
 			if ( user.scores.length !== 10 ) throw "Unexpected count of scores from the survey. There must be exactly 10 scores.";
 			user.scores = user.scores.map(function(score) {	
 				score = parseInt(score);
