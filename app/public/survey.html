@@ -68,6 +68,9 @@
 				<div class="modal-body">
 					<h2 id="matchName" class="text-center"></h2>
 					<img class="img-rounded img-responsive center-block" id="matchImg" src="" alt="image provided by your match">
+					<div id="responseError" class="alert alert-danger hidden" role="alert">
+						<p>There was a problem processing your survey. Please be sure to complete the entire survey.</p>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -124,8 +127,7 @@
 
 				// add required attribute to first radio control in group
 				$formGroup.find("input").first().prop("required", true);
-				$questionsDiv.append($formGroup);
-					
+				$questionsDiv.append($formGroup);					
 			});
 		}
 
@@ -148,17 +150,37 @@
 			var currentURL = window.location.origin;
 
 			// AJAX post the data to the friends API. 
-			$.post(currentURL + "/api/friends", userData, handleMatchReturned);
+			$.post(currentURL + "/api/friends", userData, handleMatchReturned).fail(handleFailedRequest);
 		}
 
 		// Displays match data in a modal
 		function handleMatchReturned(matchData) {
 			// add data to the modal
 			$("#matchName").text(matchData.name);
-			$("#matchImg").attr("src", matchData.photo);
+			$("#matchImg").attr("src", matchData.photo).removeClass("hidden");
+
+			// make sure the error message is hidden
+			$("#responseError").addClass("hidden");
 
 			// show the modal
 			$("#resultsModal").modal('toggle');
+		}
+
+		// Prompts user to check form and try again
+		function handleFailedRequest() {
+			console.log("request failed");
+
+			// error message visible on the modal
+			$("#responseError").removeClass("hidden");
+
+			// set the title of the modal
+			$("#matchName").text("Uh oh!");
+
+			// hide the image
+			$("#matchImg").addClass("hidden");
+
+			// show the modal			
+			$("#resultsModal").modal('toggle');			
 		}
 
 		$(document).ready(function () {

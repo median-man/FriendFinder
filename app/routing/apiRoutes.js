@@ -17,7 +17,7 @@ module.exports = function(app) {
 	});
 
 	// Return a json of match from friends and add user to friends
-	app.post("/api/friends", function(req, res) {
+	app.post("/api/friends", function(req, res, next) {
 		// get the friend object returned by the user
 		let user = req.body;
 
@@ -43,8 +43,8 @@ module.exports = function(app) {
 		}
 		catch ( err ) {
 	
-		// TODO: handle user input error
-			return res.send(err.toString());
+			// handle user input error. returns status code 500
+			return next(err);
 		}
 
 		// find the closest match to the user
